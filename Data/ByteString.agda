@@ -21,8 +21,8 @@ empty {Lazy} = Prim.emptyLazy
 empty {Strict} = Prim.emptyStrict
 
 length : ∀ {k} → ByteString k → ℕ
-length {Lazy} = Prim.lengthLazy
-length {Strict} = Prim.lengthStrict
+length {Lazy} bs = Prim.int64Toℕ (Prim.lengthLazy bs)
+length {Strict} bs = Prim.intToℕ (Prim.lengthStrict bs)
 
 ByteStringRep : ByteStringKind → Set
 ByteStringRep Lazy = Colist Word8

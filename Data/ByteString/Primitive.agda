@@ -12,6 +12,17 @@ open import Data.String using (String)
 open import IO.Primitive using (IO)
 open import Foreign.Haskell using (Unit)
 
+{-# IMPORT Data.Int #-}
+postulate
+  Int : Set
+  Int64 : Set
+  intToℕ : Int → ℕ
+  int64Toℕ : Int64 → ℕ
+{-# COMPILED_TYPE Int (Prelude.Int) #-}
+{-# COMPILED_TYPE Int64 (Data.Int.Int64) #-}
+{-# COMPILED intToℕ (Prelude.fromIntegral) #-}
+{-# COMPILED int64Toℕ (Prelude.fromIntegral) #-}
+
 postulate
   ByteStringLazy : Set
   readBinaryFileLazy    : String → IO ByteStringLazy
@@ -19,7 +30,7 @@ postulate
   Colist←Lazy : ByteStringLazy → Colist Word8
   Colist→Lazy : Colist Word8 → ByteStringLazy
   emptyLazy : ByteStringLazy
-  lengthLazy : ByteStringLazy → ℕ
+  lengthLazy : ByteStringLazy → Int64
 
 {-# COMPILED_TYPE ByteStringLazy 
     Data.ByteString.Lazy.ByteString
@@ -38,8 +49,8 @@ postulate
     ( Data.ByteString.Lazy.unpack ) #-}
 {-# COMPILED Colist→Lazy
     ( Data.ByteString.Lazy.pack ) #-}
-{-# COMPILED emptyLazy (Data.ByteString.empty) #-}
-{-# COMPILED lengthLazy (Data.ByteString.length) #-}
+{-# COMPILED emptyLazy (Data.ByteString.Lazy.empty) #-}
+{-# COMPILED lengthLazy (Data.ByteString.Lazy.length) #-}
 
 postulate
   ByteStringStrict : Set
@@ -48,7 +59,7 @@ postulate
   List←Strict : ByteStringStrict → List Word8
   List→Strict : List Word8 → ByteStringStrict
   emptyStrict : ByteStringStrict
-  lengthStrict : ByteStringStrict → ℕ
+  lengthStrict : ByteStringStrict → Int
 
 {-# COMPILED_TYPE ByteStringStrict 
     Data.ByteString.ByteString
