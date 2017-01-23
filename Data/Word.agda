@@ -22,3 +22,6 @@ w₁ ≟ w₂ with w₁ == w₂
 ... | true  = yes trustMe
 ... | false = no whatever
   where postulate whatever : _
+
+-- toℕ : Word8 → Nat
+-- toℕ = Word8toNat
