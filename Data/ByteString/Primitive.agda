@@ -70,3 +70,10 @@ postulate
 {-# COMPILED emptyStrict (Data.ByteString.empty) #-}
 {-# COMPILED lengthStrict (Data.ByteString.length) #-}
 
+
+postulate
+  toLazy : ByteStringStrict → ByteStringLazy
+  toStrict : ByteStringLazy  → ByteStringStrict
+{-# COMPILED toLazy (Data.ByteString.Lazy.fromStrict) #-}
+{-# COMPILED toStrict (Data.ByteString.Lazy.toStrict) #-}
+

@@ -28,11 +28,11 @@ ByteStringRep : ByteStringKind → Set
 ByteStringRep Lazy = Colist Word8
 ByteStringRep Strict = List Word8
 
-toRep : ∀ {k} → ByteString k → ByteStringRep k
-toRep {Lazy} = Prim.Colist←Lazy
-toRep {Strict} = Prim.List←Strict
+unpack : ∀ {k} → ByteString k → ByteStringRep k
+unpack {Lazy} = Prim.Colist←Lazy
+unpack {Strict} = Prim.List←Strict
 
-fromRep : ∀ {k} → ByteStringRep k → ByteString k
-fromRep {Lazy} = Prim.Colist→Lazy
-fromRep {Strict} = Prim.List→Strict
+pack : ∀ {k} → ByteStringRep k → ByteString k
+pack {Lazy} = Prim.Colist→Lazy
+pack {Strict} = Prim.List→Strict
 

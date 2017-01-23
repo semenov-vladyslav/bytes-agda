@@ -19,7 +19,7 @@ readBinaryFile {Lazy} f = lift (Prim.readBinaryFileLazy f)
 readBinaryFile {Strict} f = lift (Prim.readBinaryFileStrict f)
 
 readBinaryFile′ : ∀ {k} → String → IO (ByteStringRep k)
-readBinaryFile′ {k} f = ♯ readBinaryFile f >>= (λ bs → ♯ return (toRep bs))
+readBinaryFile′ {k} f = ♯ readBinaryFile f >>= (λ bs → ♯ return (unpack bs))
 
 writeBinaryFile : ∀ {k} → String → ByteString k → IO ⊤
 writeBinaryFile {Lazy} f s =
@@ -30,6 +30,6 @@ writeBinaryFile {Strict} f s =
   ♯ return _
 
 writeBinaryFile′ : ∀ {k} → String → ByteStringRep k → IO ⊤
-writeBinaryFile′ {k} f bs = writeBinaryFile f (fromRep bs)
+writeBinaryFile′ {k} f bs = writeBinaryFile f (pack bs)
 
 
