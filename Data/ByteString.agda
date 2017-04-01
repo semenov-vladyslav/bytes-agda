@@ -1,4 +1,5 @@
 import Data.ByteString.Primitive as Prim
+import Data.ByteString.Utf8 as Utf8
 
 module Data.ByteString where
 
