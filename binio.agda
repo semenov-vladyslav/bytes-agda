@@ -2,6 +2,7 @@ module binio where
 
 open import Data.Word
 import Data.ByteString as BS
+import Data.ByteString.IO as BSIO
 open import Data.Fin using (Fin; toℕ)
 open import Data.Vec using (Vec; toList; tabulate)
 open import Data.List using (List)
@@ -37,7 +38,7 @@ b256′ = fromList b256
 -- main = run (♯ readBinaryFile "256.bin" >>= λ x → ♯ writeBinaryFile "256'.bin" x)
 -- main = run (readFile "256.bin")
 
-main = run (BS.IO.writeBinaryFile′ "256.bin" b256)
+main = run (BSIO.writeBinaryFile′ "256.bin" b256)
 -- main = run (BS.IO.writeBinaryFile′ "256'.bin" b256′)
 
 -- main = run (BS.IO.writeBinaryFile′ "256.bin" b256 >> BS.IO.writeBinaryFile′ "256'.bin" b256′)

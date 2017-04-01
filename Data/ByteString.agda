@@ -1,6 +1,6 @@
-module Data.ByteString where
-
 import Data.ByteString.Primitive as Prim
+
+module Data.ByteString where
 
 open import Data.Word using (Word8)
 open import Data.Nat using (ℕ)

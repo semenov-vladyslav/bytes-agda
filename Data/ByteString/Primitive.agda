@@ -6,22 +6,23 @@ open import Data.Colist using (Colist)
 open import Data.List using (List)
 open import Data.String using (String)
 
-{-# IMPORT Data.Text    #-}
-{-# IMPORT Data.ByteString.Lazy    #-}
-{-# IMPORT Data.ByteString    #-}
+{-# FOREIGN GHC import qualified Data.Word    #-}
+{-# FOREIGN GHC import qualified Data.Text    #-}
+{-# FOREIGN GHC import qualified Data.ByteString.Lazy    #-}
+{-# FOREIGN GHC import qualified Data.ByteString    #-}
 open import IO.Primitive using (IO)
 open import Foreign.Haskell using (Unit)
 
-{-# IMPORT Data.Int #-}
+{-# FOREIGN GHC import qualified Data.Int #-}
 postulate
   Int : Set
   Int64 : Set
   intToℕ : Int → ℕ
   int64Toℕ : Int64 → ℕ
-{-# COMPILED_TYPE Int (Prelude.Int) #-}
-{-# COMPILED_TYPE Int64 (Data.Int.Int64) #-}
-{-# COMPILED intToℕ (Prelude.fromIntegral) #-}
-{-# COMPILED int64Toℕ (Prelude.fromIntegral) #-}
+{-# COMPILE GHC Int = type (Prelude.Int) #-}
+{-# COMPILE GHC Int64 = type (Data.Int.Int64) #-}
+{-# COMPILE GHC intToℕ = (Prelude.fromIntegral) #-}
+{-# COMPILE GHC int64Toℕ = (Prelude.fromIntegral) #-}
 
 postulate
   ByteStringLazy : Set
@@ -32,25 +33,25 @@ postulate
   emptyLazy : ByteStringLazy
   lengthLazy : ByteStringLazy → Int64
 
-{-# COMPILED_TYPE ByteStringLazy 
+{-# COMPILE GHC ByteStringLazy = type
     Data.ByteString.Lazy.ByteString
 #-}
-{-# COMPILED readBinaryFileLazy 
+{-# COMPILE GHC readBinaryFileLazy = 
     ( Data.ByteString.Lazy.readFile
     . Data.Text.unpack
     )
 #-}
-{-# COMPILED writeBinaryFileLazy
+{-# COMPILE GHC writeBinaryFileLazy =
     ( Data.ByteString.Lazy.writeFile
     . Data.Text.unpack
     )
 #-}
-{-# COMPILED Colist←Lazy
+{-# COMPILE GHC Colist←Lazy =
     ( Data.ByteString.Lazy.unpack ) #-}
-{-# COMPILED Colist→Lazy
+{-# COMPILE GHC Colist→Lazy =
     ( Data.ByteString.Lazy.pack ) #-}
-{-# COMPILED emptyLazy (Data.ByteString.Lazy.empty) #-}
-{-# COMPILED lengthLazy (Data.ByteString.Lazy.length) #-}
+{-# COMPILE GHC emptyLazy = (Data.ByteString.Lazy.empty) #-}
+{-# COMPILE GHC lengthLazy = (Data.ByteString.Lazy.length) #-}
 
 postulate
   ByteStringStrict : Set
@@ -61,30 +62,30 @@ postulate
   emptyStrict : ByteStringStrict
   lengthStrict : ByteStringStrict → Int
 
-{-# COMPILED_TYPE ByteStringStrict 
+{-# COMPILE GHC ByteStringStrict = type
     Data.ByteString.ByteString
 #-}
-{-# COMPILED readBinaryFileStrict 
+{-# COMPILE GHC readBinaryFileStrict =
     ( Data.ByteString.readFile
     . Data.Text.unpack
     )
 #-}
-{-# COMPILED writeBinaryFileStrict
+{-# COMPILE GHC writeBinaryFileStrict =
     ( Data.ByteString.writeFile
     . Data.Text.unpack
     )
 #-}
-{-# COMPILED List←Strict
+{-# COMPILE GHC List←Strict =
     ( Data.ByteString.unpack ) #-}
-{-# COMPILED List→Strict
+{-# COMPILE GHC List→Strict =
     ( Data.ByteString.pack ) #-}
-{-# COMPILED emptyStrict (Data.ByteString.empty) #-}
-{-# COMPILED lengthStrict (Data.ByteString.length) #-}
+{-# COMPILE GHC emptyStrict = (Data.ByteString.empty) #-}
+{-# COMPILE GHC lengthStrict = (Data.ByteString.length) #-}
 
 
 postulate
   toLazy : ByteStringStrict → ByteStringLazy
   toStrict : ByteStringLazy  → ByteStringStrict
-{-# COMPILED toLazy (Data.ByteString.Lazy.fromStrict) #-}
-{-# COMPILED toStrict (Data.ByteString.Lazy.toStrict) #-}
+{-# COMPILE GHC toLazy = (Data.ByteString.Lazy.fromStrict) #-}
+{-# COMPILE GHC toStrict = (Data.ByteString.Lazy.toStrict) #-}
 
