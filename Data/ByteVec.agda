@@ -1,9 +1,11 @@
 module Data.ByteVec where
 
-open import Data.ByteString using (ByteString; length)
+import Data.ByteString as BS
+open BS using (ByteString; length)
 open import Data.Nat using (ℕ)
 open import Data.Product using (Σ)
 open import Relation.Binary.PropositionalEquality using (_≡_)
 
+open BS public using (ByteStringKind; Lazy; Strict)
 ByteVec : ∀ {k} → ℕ → Set
 ByteVec {k} n = Σ (ByteString k) (λ bs → n ≡ length bs)
