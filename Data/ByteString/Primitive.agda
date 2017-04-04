@@ -5,6 +5,7 @@ open import Data.Nat using (ℕ)
 open import Data.Colist using (Colist)
 open import Data.List using (List)
 open import Data.String using (String)
+open import Data.Bool using (Bool)
 
 {-# FOREIGN GHC import qualified Data.Word    #-}
 {-# FOREIGN GHC import qualified Data.Text    #-}
@@ -86,6 +87,15 @@ postulate
 postulate
   toLazy : ByteStringStrict → ByteStringLazy
   toStrict : ByteStringLazy  → ByteStringStrict
+  lazy≟lazy : ByteStringLazy → ByteStringLazy → Bool
+  strict≟strict : ByteStringStrict → ByteStringStrict → Bool
 {-# COMPILE GHC toLazy = (Data.ByteString.Lazy.fromStrict) #-}
 {-# COMPILE GHC toStrict = (Data.ByteString.Lazy.toStrict) #-}
+{-# COMPILE GHC lazy≟lazy = (==) #-}
+{-# COMPILE GHC strict≟strict = (==) #-}
+
+lazy≟strict : ByteStringLazy → ByteStringStrict → Bool
+lazy≟strict l s = lazy≟lazy l (toLazy s)
+strict≟lazy : ByteStringStrict → ByteStringLazy → Bool
+strict≟lazy s l = lazy≟lazy (toLazy s) l
 
