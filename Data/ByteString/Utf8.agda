@@ -1,7 +1,7 @@
 module Data.ByteString.Utf8 where
 
 open import Data.ByteString.Primitive
-open import Data.String
+open import Data.String using (String)
 
 {-# FOREIGN GHC import qualified Data.ByteString #-}
 {-# FOREIGN GHC import qualified Data.Text.Encoding #-}
