@@ -36,7 +36,10 @@ postulate
   Colist←Lazy : ByteStringLazy → Colist Word8
   Colist→Lazy : Colist Word8 → ByteStringLazy
   emptyLazy : ByteStringLazy
+  nullLazy : ByteStringLazy → Bool
   lengthLazy : ByteStringLazy → Int64
+  headLazy : ByteStringLazy → Word8
+  tailLazy : ByteStringLazy → ByteStringLazy
   indexLazy : ByteStringLazy → Int → Word8
   splitAtLazy : ByteStringLazy → Int → Pair ByteStringLazy ByteStringLazy
   appendLazy : ByteStringLazy → ByteStringLazy → ByteStringLazy
@@ -59,7 +62,10 @@ postulate
 {-# COMPILE GHC Colist→Lazy =
     ( Data.ByteString.Lazy.pack ) #-}
 {-# COMPILE GHC emptyLazy = (Data.ByteString.Lazy.empty) #-}
+{-# COMPILE GHC nullLazy = (Data.ByteString.Lazy.null) #-}
 {-# COMPILE GHC lengthLazy = (Data.ByteString.Lazy.length) #-}
+{-# COMPILE GHC headLazy = (Data.ByteString.Lazy.head) #-}
+{-# COMPILE GHC tailLazy = (Data.ByteString.Lazy.tail) #-}
 {-# COMPILE GHC indexLazy = (Data.ByteString.Lazy.index) #-}
 {-# COMPILE GHC appendLazy = (Data.ByteString.Lazy.append) #-}
 {-# COMPILE GHC splitAtLazy = (Data.ByteString.Lazy.splitAt) #-}
@@ -71,7 +77,10 @@ postulate
   List←Strict : ByteStringStrict → List Word8
   List→Strict : List Word8 → ByteStringStrict
   emptyStrict : ByteStringStrict
+  nullStrict : ByteStringStrict → Bool
   lengthStrict : ByteStringStrict → Int
+  headStrict : ByteStringStrict → Word8
+  tailStrict : ByteStringStrict → ByteStringStrict
   indexStrict : ByteStringStrict → Int → Word8
   splitAtStrict : ByteStringStrict → Int → Pair ByteStringStrict ByteStringStrict
 
@@ -93,7 +102,10 @@ postulate
 {-# COMPILE GHC List→Strict =
     ( Data.ByteString.pack ) #-}
 {-# COMPILE GHC emptyStrict = (Data.ByteString.empty) #-}
+{-# COMPILE GHC nullStrict = (Data.ByteString.null) #-}
 {-# COMPILE GHC lengthStrict = (Data.ByteString.length) #-}
+{-# COMPILE GHC headStrict = (Data.ByteString.head) #-}
+{-# COMPILE GHC tailStrict = (Data.ByteString.tail) #-}
 {-# COMPILE GHC indexStrict = (Data.ByteString.index) #-}
 {-# COMPILE GHC splitAtStrict = (Data.ByteString.splitAt) #-}
 

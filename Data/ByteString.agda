@@ -30,9 +30,21 @@ empty : ∀ {k} → ByteString k
 empty {Lazy} = Prim.emptyLazy
 empty {Strict} = Prim.emptyStrict
 
+null : ∀ {k} → ByteString k → Bool
+null {Lazy} = Prim.nullLazy
+null {Strict} = Prim.nullStrict
+
 length : ∀ {k} → ByteString k → ℕ
 length {Lazy} bs = Prim.int64Toℕ (Prim.lengthLazy bs)
 length {Strict} bs = Prim.IntToℕ (Prim.lengthStrict bs)
+
+unsafeHead : ∀ {k} → ByteString k → Word8
+unsafeHead {Lazy} = Prim.headLazy
+unsafeHead {Strict} = Prim.headStrict
+
+unsafeTail : ∀ {k} → ByteString k → ByteString k
+unsafeTail {Lazy} = Prim.tailLazy
+unsafeTail {Strict} = Prim.tailStrict
 
 unsafeIndex : ∀ {k} → ByteString k → ℕ → Word8
 unsafeIndex {Lazy} bs ix = Prim.indexLazy bs (Prim.ℕToInt ix)
