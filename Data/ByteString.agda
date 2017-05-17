@@ -30,7 +30,11 @@ empty {Strict} = Prim.emptyStrict
 
 length : ∀ {k} → ByteString k → ℕ
 length {Lazy} bs = Prim.int64Toℕ (Prim.lengthLazy bs)
-length {Strict} bs = Prim.intToℕ (Prim.lengthStrict bs)
+length {Strict} bs = Prim.IntToℕ (Prim.lengthStrict bs)
+
+unsafeIndex : ∀ {k} → ByteString k → ℕ → Word8
+unsafeIndex {Lazy} bs ix = Prim.indexLazy bs (Prim.ℕToInt ix)
+unsafeIndex {Strict} bs ix = Prim.indexStrict bs (Prim.ℕToInt ix)
 
 ByteStringRep : ByteStringKind → Set
 ByteStringRep Lazy = Colist Word8
@@ -62,4 +66,19 @@ infix 4 _==_
 
 _==_ : ∀ {k} → ByteString k → ByteString k → Bool
 _==_ {k} s₁ s₂ = ⌊ s₁ ≟ s₂ ⌋
+
+_++_ : ByteString Lazy → ByteString Lazy → ByteString Lazy
+_++_ = Prim.appendLazy
+
+fromChunks : List (ByteString Strict) → ByteString Lazy
+fromChunks = Prim.fromChunks
+
+toChunks : ByteString Lazy → List (ByteString Strict)
+toChunks = Prim.toChunks
+
+toLazy : ByteString Strict → ByteString Lazy
+toLazy = Prim.toLazy
+
+toStrict : ByteString Lazy → ByteString Strict
+toStrict = Prim.toStrict
 

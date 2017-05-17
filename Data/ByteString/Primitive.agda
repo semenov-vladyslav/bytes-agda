@@ -18,11 +18,13 @@ open import Foreign.Haskell using (Unit)
 postulate
   Int : Set
   Int64 : Set
-  intToℕ : Int → ℕ
+  IntToℕ : Int → ℕ
+  ℕToInt : ℕ → Int
   int64Toℕ : Int64 → ℕ
 {-# COMPILE GHC Int = type (Prelude.Int) #-}
 {-# COMPILE GHC Int64 = type (Data.Int.Int64) #-}
-{-# COMPILE GHC intToℕ = (Prelude.fromIntegral) #-}
+{-# COMPILE GHC IntToℕ = (Prelude.fromIntegral) #-}
+{-# COMPILE GHC ℕToInt = (Prelude.fromIntegral) #-}
 {-# COMPILE GHC int64Toℕ = (Prelude.fromIntegral) #-}
 
 postulate
@@ -33,6 +35,8 @@ postulate
   Colist→Lazy : Colist Word8 → ByteStringLazy
   emptyLazy : ByteStringLazy
   lengthLazy : ByteStringLazy → Int64
+  indexLazy : ByteStringLazy → Int → Word8
+  appendLazy : ByteStringLazy → ByteStringLazy → ByteStringLazy
 
 {-# COMPILE GHC ByteStringLazy = type
     Data.ByteString.Lazy.ByteString
@@ -53,6 +57,8 @@ postulate
     ( Data.ByteString.Lazy.pack ) #-}
 {-# COMPILE GHC emptyLazy = (Data.ByteString.Lazy.empty) #-}
 {-# COMPILE GHC lengthLazy = (Data.ByteString.Lazy.length) #-}
+{-# COMPILE GHC indexLazy = (Data.ByteString.Lazy.index) #-}
+{-# COMPILE GHC appendLazy = (Data.ByteString.Lazy.append) #-}
 
 postulate
   ByteStringStrict : Set
@@ -62,6 +68,7 @@ postulate
   List→Strict : List Word8 → ByteStringStrict
   emptyStrict : ByteStringStrict
   lengthStrict : ByteStringStrict → Int
+  indexStrict : ByteStringStrict → Int → Word8
 
 {-# COMPILE GHC ByteStringStrict = type
     Data.ByteString.ByteString
@@ -82,6 +89,7 @@ postulate
     ( Data.ByteString.pack ) #-}
 {-# COMPILE GHC emptyStrict = (Data.ByteString.empty) #-}
 {-# COMPILE GHC lengthStrict = (Data.ByteString.length) #-}
+{-# COMPILE GHC indexStrict = (Data.ByteString.index) #-}
 
 
 postulate
@@ -98,4 +106,11 @@ lazy≟strict : ByteStringLazy → ByteStringStrict → Bool
 lazy≟strict l s = lazy≟lazy l (toLazy s)
 strict≟lazy : ByteStringStrict → ByteStringLazy → Bool
 strict≟lazy s l = lazy≟lazy (toLazy s) l
+
+postulate
+  fromChunks : List ByteStringStrict → ByteStringLazy
+  toChunks : ByteStringLazy → List ByteStringStrict
+{-# COMPILE GHC fromChunks = (Data.ByteString.Lazy.fromChunks) #-}
+{-# COMPILE GHC toChunks = (Data.ByteString.Lazy.toChunks) #-}
+
 
