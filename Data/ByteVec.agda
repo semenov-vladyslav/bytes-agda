@@ -1,8 +1,9 @@
 module Data.ByteVec where
 
 import Data.ByteString as BS
+open import Data.Word using (Word8)
 open BS using (ByteString; length)
-open import Data.Nat using (ℕ; _≟_)
+open import Data.Nat using (ℕ; _≟_; _<_)
 open import Data.Product using (Σ; _,_)
 open import Relation.Nullary.Decidable using (True)
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -23,6 +24,9 @@ mkVec {k} n = _,_
 
 primMkVec : ∀ {k n} → ByteString k → ByteVec {k} n
 primMkVec bs = bs , trustMe
+
+index : ∀ {k n} → ByteVec {k} n → (ix : ℕ) → {ix<n : ix < n} → Word8
+index (bs , _) ix {_} = BS.unsafeIndex bs ix
 
 module test where
   open import Data.ByteString.Utf8 using (packStrict)
