@@ -9,6 +9,8 @@ open import Data.Colist using (Colist)
 open import Data.List using (List)
 open import Data.String using (String)
 open import Data.Bool using (Bool; true; false)
+open import Data.Product using (_×_)
+open import Data.Tuple using (Pair→×)
 
 open import Relation.Nullary using (yes; no)
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -35,6 +37,10 @@ length {Strict} bs = Prim.IntToℕ (Prim.lengthStrict bs)
 unsafeIndex : ∀ {k} → ByteString k → ℕ → Word8
 unsafeIndex {Lazy} bs ix = Prim.indexLazy bs (Prim.ℕToInt ix)
 unsafeIndex {Strict} bs ix = Prim.indexStrict bs (Prim.ℕToInt ix)
+
+unsafeSplitAt : ∀ {k} → ByteString k → ℕ → (ByteString k) × (ByteString k)
+unsafeSplitAt {Lazy} bs ix = Pair→× (Prim.splitAtLazy bs (Prim.ℕToInt ix))
+unsafeSplitAt {Strict} bs ix = Pair→× (Prim.splitAtStrict bs (Prim.ℕToInt ix))
 
 ByteStringRep : ByteStringKind → Set
 ByteStringRep Lazy = Colist Word8

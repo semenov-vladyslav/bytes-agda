@@ -6,6 +6,8 @@ open import Data.Colist using (Colist)
 open import Data.List using (List)
 open import Data.String using (String)
 open import Data.Bool using (Bool)
+open import Data.Product using (_×_)
+open import Data.Tuple using (Pair)
 
 {-# FOREIGN GHC import qualified Data.Word    #-}
 {-# FOREIGN GHC import qualified Data.Text    #-}
@@ -36,6 +38,7 @@ postulate
   emptyLazy : ByteStringLazy
   lengthLazy : ByteStringLazy → Int64
   indexLazy : ByteStringLazy → Int → Word8
+  splitAtLazy : ByteStringLazy → Int → Pair ByteStringLazy ByteStringLazy
   appendLazy : ByteStringLazy → ByteStringLazy → ByteStringLazy
 
 {-# COMPILE GHC ByteStringLazy = type
@@ -59,6 +62,7 @@ postulate
 {-# COMPILE GHC lengthLazy = (Data.ByteString.Lazy.length) #-}
 {-# COMPILE GHC indexLazy = (Data.ByteString.Lazy.index) #-}
 {-# COMPILE GHC appendLazy = (Data.ByteString.Lazy.append) #-}
+{-# COMPILE GHC splitAtLazy = (Data.ByteString.Lazy.splitAt) #-}
 
 postulate
   ByteStringStrict : Set
@@ -69,6 +73,7 @@ postulate
   emptyStrict : ByteStringStrict
   lengthStrict : ByteStringStrict → Int
   indexStrict : ByteStringStrict → Int → Word8
+  splitAtStrict : ByteStringStrict → Int → Pair ByteStringStrict ByteStringStrict
 
 {-# COMPILE GHC ByteStringStrict = type
     Data.ByteString.ByteString
@@ -90,6 +95,7 @@ postulate
 {-# COMPILE GHC emptyStrict = (Data.ByteString.empty) #-}
 {-# COMPILE GHC lengthStrict = (Data.ByteString.length) #-}
 {-# COMPILE GHC indexStrict = (Data.ByteString.index) #-}
+{-# COMPILE GHC splitAtStrict = (Data.ByteString.splitAt) #-}
 
 
 postulate
