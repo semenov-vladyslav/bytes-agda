@@ -49,12 +49,12 @@ unsafeTail {Lazy} = Prim.tailLazy
 unsafeTail {Strict} = Prim.tailStrict
 
 unsafeIndex : ∀ {k} → ByteString k → ℕ → Word8
-unsafeIndex {Lazy} bs ix = Prim.indexLazy bs (Prim.ℕToInt ix)
+unsafeIndex {Lazy} bs ix = Prim.indexLazy bs (Prim.ℕToInt64 ix)
 unsafeIndex {Strict} bs ix = Prim.indexStrict bs (Prim.ℕToInt ix)
 
-unsafeSplitAt : ∀ {k} → ByteString k → ℕ → (ByteString k) × (ByteString k)
-unsafeSplitAt {Lazy} bs ix = Pair→× (Prim.splitAtLazy bs (Prim.ℕToInt ix))
-unsafeSplitAt {Strict} bs ix = Pair→× (Prim.splitAtStrict bs (Prim.ℕToInt ix))
+unsafeSplitAt : ∀ {k} → ℕ → ByteString k → (ByteString k) × (ByteString k)
+unsafeSplitAt {Lazy} ix bs = Pair→× (Prim.splitAtLazy (Prim.ℕToInt64 ix) bs)
+unsafeSplitAt {Strict} ix bs = Pair→× (Prim.splitAtStrict (Prim.ℕToInt ix) bs)
 
 ByteStringRep : ByteStringKind → Set
 ByteStringRep Lazy = Colist Word8

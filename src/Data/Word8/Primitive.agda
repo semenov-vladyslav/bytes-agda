@@ -11,11 +11,13 @@ open import Agda.Builtin.Nat using (Nat)
 postulate
   Word8 : Set
   _==_ : Word8 → Word8 → Bool
+  _/=_ : Word8 → Word8 → Bool
   _xor_ : Word8 → Word8 → Word8
   _and_ : Word8 → Word8 → Word8
   _or_ : Word8 → Word8 → Word8
 {-# COMPILE GHC Word8 = type Data.Word.Word8 #-}
 {-# COMPILE GHC _==_ = (Prelude.==) #-}
+{-# COMPILE GHC _/=_ = (Prelude./=) #-}
 {-# COMPILE GHC _xor_ = (Data.Bits.xor) #-}
 {-# COMPILE GHC _and_ = (Data.Bits..&.) #-}
 {-# COMPILE GHC _or_ = (Data.Bits..|.) #-}

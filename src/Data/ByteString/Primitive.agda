@@ -25,11 +25,13 @@ postulate
   IntToℕ : Int → ℕ
   ℕToInt : ℕ → Int
   int64Toℕ : Int64 → ℕ
+  ℕToInt64 : ℕ → Int64
 {-# COMPILE GHC Int = type (Prelude.Int) #-}
 {-# COMPILE GHC Int64 = type (Data.Int.Int64) #-}
 {-# COMPILE GHC IntToℕ = (Prelude.fromIntegral) #-}
 {-# COMPILE GHC ℕToInt = (Prelude.fromIntegral) #-}
 {-# COMPILE GHC int64Toℕ = (Prelude.fromIntegral) #-}
+{-# COMPILE GHC ℕToInt64 = (Prelude.fromIntegral) #-}
 
 postulate
   ByteStringLazy : Set
@@ -42,8 +44,8 @@ postulate
   lengthLazy : ByteStringLazy → Int64
   headLazy : ByteStringLazy → Word8
   tailLazy : ByteStringLazy → ByteStringLazy
-  indexLazy : ByteStringLazy → Int → Word8
-  splitAtLazy : ByteStringLazy → Int → Pair ByteStringLazy ByteStringLazy
+  indexLazy : ByteStringLazy → Int64 → Word8
+  splitAtLazy : Int64 → ByteStringLazy → Pair ByteStringLazy ByteStringLazy
   appendLazy : ByteStringLazy → ByteStringLazy → ByteStringLazy
 
 {-# COMPILE GHC ByteStringLazy = type
@@ -84,7 +86,7 @@ postulate
   headStrict : ByteStringStrict → Word8
   tailStrict : ByteStringStrict → ByteStringStrict
   indexStrict : ByteStringStrict → Int → Word8
-  splitAtStrict : ByteStringStrict → Int → Pair ByteStringStrict ByteStringStrict
+  splitAtStrict : Int → ByteStringStrict → Pair ByteStringStrict ByteStringStrict
 
 {-# COMPILE GHC ByteStringStrict = type
     Data.ByteString.ByteString
