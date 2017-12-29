@@ -1,6 +1,8 @@
+{-# OPTIONS --without-K #-}
+
 module Data.ByteString.Primitive where
 
-open import Data.Word using (Word8)
+open import Data.Word8 using (Word8)
 open import Data.Nat using (ℕ)
 open import Data.Colist using (Colist)
 open import Data.List using (List)

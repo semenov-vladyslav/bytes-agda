@@ -1,8 +1,11 @@
+{-# OPTIONS --without-K #-}
+
 module Data.Tuple where
 
 open import Level using (_⊔_)
 import Data.Product as P
 
+-- non-dependent pair; failed to reuse _×_
 record Pair {a b} (A : Set a) (B : Set b) : Set (a ⊔ b) where
   constructor _,_
   field

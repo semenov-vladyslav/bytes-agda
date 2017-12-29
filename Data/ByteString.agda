@@ -1,9 +1,11 @@
-import Data.ByteString.Primitive as Prim
-import Data.ByteString.Utf8 as Utf8
+{-# OPTIONS --without-K #-}
 
 module Data.ByteString where
 
-open import Data.Word using (Word8)
+import Data.ByteString.Primitive as Prim
+import Data.ByteString.Utf8 as Utf8
+
+open import Data.Word8 using (Word8)
 open import Data.Nat using (ℕ)
 open import Data.Colist using (Colist)
 open import Data.List using (List)

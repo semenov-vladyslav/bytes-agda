@@ -1,4 +1,6 @@
-module Data.Word.Primitive where
+{-# OPTIONS --without-K #-}
+
+module Data.Word8.Primitive where
 
 open import Agda.Builtin.Bool using (Bool)
 open import Agda.Builtin.Nat using (Nat)
@@ -20,7 +22,7 @@ postulate
 
 
 postulate
-  Word8fromNat : (n : Nat) → Word8
-  Word8toNat : Word8 → Nat
-{-# COMPILE GHC Word8fromNat = (\n -> Prelude.fromIntegral n) #-}
-{-# COMPILE GHC Word8toNat = (\w -> Prelude.fromIntegral w) #-}
+  primWord8fromNat : Nat → Word8
+  primWord8toNat : Word8 → Nat
+{-# COMPILE GHC primWord8fromNat = (\n -> Prelude.fromIntegral n) #-}
+{-# COMPILE GHC primWord8toNat = (\w -> Prelude.fromIntegral w) #-}

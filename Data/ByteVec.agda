@@ -1,7 +1,9 @@
+{-# OPTIONS --without-K #-}
+
 module Data.ByteVec where
 
 import Data.ByteString as BS
-open import Data.Word using (Word8)
+open import Data.Word8 using (Word8)
 open BS using (ByteString; length)
 open import Data.Nat using (ℕ; _≟_; _<_)
 open import Data.Product using (Σ; _,_)
