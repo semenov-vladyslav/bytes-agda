@@ -12,7 +12,8 @@ record Pair {a b} (A : Set a) (B : Set b) : Set (a ⊔ b) where
     fst : A
     snd : B
 {-# FOREIGN GHC type AgdaPair a b c d = (c , d) #-}
-{-# COMPILE GHC Pair = type MAlonzo.Code.Data.Tuple.AgdaPair #-}
+-- {-# COMPILE GHC Pair = type MAlonzo.Code.Data.Tuple.AgdaPair #-}
+{-# COMPILE GHC Pair = data MAlonzo.Code.Data.Tuple.AgdaPair ((,)) #-}
 
 
 Pair→× : ∀ {a b A B} → Pair {a} {b} A B → A P.× B

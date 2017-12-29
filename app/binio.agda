@@ -1,6 +1,6 @@
 module binio where
 
-open import Data.Word
+open import Data.Word8
 import Data.ByteString as BS
 import Data.ByteString.IO as BSIO
 open import Data.Fin using (Fin; toℕ)
@@ -25,7 +25,7 @@ b256 = fromList (toList (tabulate {256} fin256))
 -}
 
 fin256 : Fin 256 → Word8
-fin256 f = Word8fromNat (toℕ f)
+fin256 f = primWord8fromNat (toℕ f)
 
 b256 : List Word8
 b256 = toList (tabulate {256} fin256)
