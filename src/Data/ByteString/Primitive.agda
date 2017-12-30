@@ -3,13 +3,16 @@
 module Data.ByteString.Primitive where
 
 open import Data.Word8 using (Word8)
-open import Data.Nat using (ℕ)
+open import Data.Nat using (ℕ; _<_)
 open import Data.Colist using (Colist)
-open import Data.List using (List)
+open import Data.List using (List; length)
 open import Data.String using (String)
 open import Data.Bool using (Bool)
 open import Data.Product using (_×_)
 open import Data.Tuple using (Pair)
+
+open import Relation.Binary.PropositionalEquality using (_≡_)
+open import Relation.Binary.PropositionalEquality.TrustMe using (trustMe)
 
 {-# FOREIGN GHC import qualified Data.Word    #-}
 {-# FOREIGN GHC import qualified Data.Text    #-}
@@ -113,6 +116,20 @@ postulate
 {-# COMPILE GHC indexStrict = (Data.ByteString.index) #-}
 {-# COMPILE GHC splitAtStrict = (Data.ByteString.splitAt) #-}
 
+-- properties
+module _ where
+  List→Strict→List : (l : List Word8) → List←Strict (List→Strict l) ≡ l
+  List→Strict→List l = trustMe
+
+  Strict→List→Strict : (bs : ByteStringStrict) → List→Strict (List←Strict bs) ≡ bs
+  Strict→List→Strict bs = trustMe
+
+  ∣Strict∣≡∣List∣ : (bs : ByteStringStrict) → IntToℕ (lengthStrict bs) ≡ length (List←Strict bs)
+  ∣Strict∣≡∣List∣ bs = trustMe
+
+  2³¹ = 2147483648
+  ∣List∣≡∣Strict∣ : (l : List Word8) → (l-small : length l < 2³¹) → IntToℕ (lengthStrict (List→Strict l)) ≡ length l
+  ∣List∣≡∣Strict∣ l l-small = trustMe
 
 postulate
   toLazy : ByteStringStrict → ByteStringLazy

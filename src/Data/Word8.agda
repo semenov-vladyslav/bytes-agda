@@ -2,7 +2,8 @@
 
 module Data.Word8 where
 
-open import Data.Word8.Primitive public
+import Data.Word8.Primitive as Prim
+open Prim renaming (primWord8fromNat to to𝕎; primWord8toNat to from𝕎) public
 
 open import Agda.Builtin.Bool using (Bool; true; false)
 open import Relation.Nullary using (yes; no)

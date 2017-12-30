@@ -5,10 +5,13 @@ module Data.ByteVec where
 import Data.ByteString as BS
 open import Data.Word8 using (Word8)
 open BS using (ByteString; length)
-open import Data.Nat using (ℕ; _≟_; _<_)
-open import Data.Product using (Σ; _,_)
+open import Data.Nat using (ℕ; _<_)
+open import Data.Product using (Σ; _,_; proj₁; proj₂)
+
+open import Relation.Nullary using (yes; no)
 open import Relation.Nullary.Decidable using (True)
-open import Relation.Binary.PropositionalEquality using (_≡_; refl)
+open import Relation.Binary using (Decidable)
+open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong)
 open import Relation.Binary.PropositionalEquality.TrustMe using (trustMe)
 
 open BS public using (ByteStringKind; Lazy; Strict)
@@ -37,23 +40,14 @@ module test where
   bv′ : _
   bv′ = mkVec′ (packStrict "asdef")
 
-{-
 infix 4 _≟_
 
-_≟_ : ∀ {k} → Decidable {A = ByteString k} _≡_
-_≟_ {Lazy} s₁ s₂ with Prim.lazy≟lazy s₁ s₂
-... | true  = yes trustMe
-... | false = no whatever
-  where postulate whatever : _
-_≟_ {Strict} s₁ s₂ with Prim.strict≟strict s₁ s₂
-... | true  = yes trustMe
-... | false = no whatever
-  where postulate whatever : _
+private
+  t : ∀ {n k} → {v : ByteString k} → (us vs : n ≡ length v) → us ≡ vs
+  t us vs = trustMe -- only one proof: refl
 
--- behind _==_ is the same idea as in Data.String
-infix 4 _==_
-
-_==_ : ∀ {k} → ByteString k → ByteString k → Bool
-_==_ {k} s₁ s₂ = ⌊ s₁ ≟ s₂ ⌋
--}
+_≟_ : ∀ {k n} → Decidable {A = ByteVec {k} n} _≡_
+_≟_ {n = n} (u , us) (v , vs) with u BS.≟ v
+_≟_ {n = n} (u , us) (v , vs) | yes p rewrite p | t us vs = yes refl
+_≟_ {n = n} (u , us) (v , vs) | no ¬p = no (λ x → ¬p (cong proj₁ x))
 
