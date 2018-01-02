@@ -14,3 +14,6 @@ record Pair {a b} (A : Set a) (B : Set b) : Set (a ⊔ b) where
 -- {-# COMPILE GHC Pair = type MAlonzo.Code.Data.Tuple.AgdaPair #-}
 {-# COMPILE GHC Pair = data MAlonzo.Code.Data.Tuple.AgdaPair ((,)) #-}
 
+infixl 5 _∥_
+
+_∥_ = Pair
